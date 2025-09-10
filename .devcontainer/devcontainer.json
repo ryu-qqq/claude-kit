@@ -1,0 +1,128 @@
+{
+  "name": "Claude Code Java Spring Environment",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "devcontainer",
+  "workspaceFolder": "/workspace",
+  
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        // Claude Code
+        "anthropic.claude-code",
+        
+        // Java & Spring
+        "vscjava.vscode-java-pack",
+        "vscjava.vscode-spring-boot-dashboard",
+        "vmware.vscode-spring-boot",
+        "vscjava.vscode-gradle",
+        "vscjava.vscode-maven-graph",
+        "redhat.java",
+        
+        // Terraform & Infrastructure
+        "hashicorp.terraform",
+        "4ops.terraform",
+        "amazonwebservices.aws-toolkit-vscode",
+        
+        // Database
+        "mtxr.sqltools",
+        "mtxr.sqltools-driver-mysql",
+        
+        // Git & Version Control
+        "eamodio.gitlens",
+        "donjayamanne.githistory",
+        
+        // Code Quality
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "sonarsource.sonarlint-vscode",
+        
+        // Utilities
+        "yzhang.markdown-all-in-one",
+        "ms-azuretools.vscode-docker",
+        "gruntfuggly.todo-tree"
+      ],
+      "settings": {
+        // Java Settings
+        "java.home": "/opt/java/openjdk",
+        "java.configuration.runtimes": [{
+          "name": "JavaSE-21",
+          "path": "/opt/java/openjdk",
+          "default": true
+        }],
+        "spring-boot.ls.java.home": "/opt/java/openjdk",
+        "java.gradle.home": "/opt/gradle-8.5",
+        "java.compile.nullAnalysis.mode": "automatic",
+        
+        // Editor Settings
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "[java]": {
+          "editor.defaultFormatter": "redhat.java"
+        },
+        "editor.codeActionsOnSave": {
+          "source.fixAll.eslint": "explicit",
+          "source.organizeImports": "explicit"
+        },
+        
+        // Terminal Settings
+        "terminal.integrated.defaultProfile.linux": "zsh",
+        "terminal.integrated.profiles.linux": {
+          "bash": {
+            "path": "bash",
+            "icon": "terminal-bash"
+          },
+          "zsh": {
+            "path": "zsh",
+            "icon": "terminal"
+          }
+        },
+        
+        // Claude Code Settings
+        "claude.autoLoadAgents": true,
+        "claude.agentDirectory": "/workspace/.claude/agents",
+        "claude.defaultModel": "claude-3-opus",
+        
+        // Git Settings
+        "git.autofetch": true,
+        "git.confirmSync": false,
+        
+        // SQL Tools Settings
+        "sqltools.connections": [{
+          "name": "DevMySQL",
+          "driver": "MySQL",
+          "server": "mysql",
+          "port": 3306,
+          "database": "devdb",
+          "username": "devuser",
+          "password": "devpass"
+        }]
+      }
+    }
+  },
+  
+  "forwardPorts": [
+    3000,  // Frontend dev server
+    3306,  // MySQL
+    4566,  // LocalStack
+    6379,  // Redis
+    8080,  // Spring Boot
+    5001   // Additional services
+  ],
+  
+  "postStartCommand": "sudo /usr/local/bin/init-firewall.sh && /usr/local/bin/setup-dev-env.sh",
+  "postAttachCommand": "/usr/local/bin/start-claude.sh",
+  
+  "remoteUser": "developer",
+  
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "installZsh": true,
+      "configureZshAsDefaultShell": true,
+      "installOhMyZsh": true,
+      "upgradePackages": false,
+      "username": "developer",
+      "userUid": "1000",
+      "userGid": "1000"
+    }
+  }
+}
