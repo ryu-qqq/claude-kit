@@ -18,10 +18,11 @@ A comprehensive collection of specialized AI agents for software development, in
 
 ## 📋 Agent Categories
 
-### ☕ Java Spring Development (9 agents)
+### ☕ Java Spring Development (10 agents)
 **Enterprise Java & Spring Boot**
 - **spring-boot-architect** ⭐ - Enterprise Spring Boot applications, REST APIs, Spring Security, JPA
 - **aws-java-sdk-specialist** ⭐ **NEW** - AWS Java SDK v2 전문가, 회사 표준 AWS 통합 모듈 구축
+- **aws-kit-specialist** ⭐ **NEW** - AWS Kit 라이브러리 전문가, Type-safe AWS SDK 추상화
 - **backend-architect** - Scalable API design and microservices architecture
 - **database-architect** - Database design, optimization, and architecture patterns
 - **database-optimizer** - Query optimization and performance tuning
@@ -30,9 +31,10 @@ A comprehensive collection of specialized AI agents for software development, in
 - **api-documenter** - API documentation and specification generation
 - **performance-profiler** - Application performance analysis and optimization
 
-### 🏗️ Infrastructure & DevOps (8 agents)
+### 🏗️ Infrastructure & DevOps (9 agents)
 **Core AWS & Cloud Infrastructure**
 - **aws-terraform-architect** ⭐ - AWS infrastructure specialist with Terraform IaC, production-ready architectures
+- **stackkit-terraform-specialist** ⭐ **NEW** - StackKit 전용 Terraform 전문가, GitOps Atlantis 워크플로우
 - **cost-optimized-environment-manager** ⭐ - Cost-efficient dev/test environments with auto-scheduling
 - **cloud-architect** - Multi-cloud infrastructure design and optimization (AWS/Azure/GCP)  
 - **terraform-specialist** - Terraform modules, state management, and IaC best practices
@@ -262,6 +264,6 @@ spring-boot-architect + performance-profiler + database-optimizer + load-testing
 ---
 
 *Last updated: 2024-12-09*
-*Total agents: 29*
-*Featured agents: 4*
+*Total agents: 31*
+*Featured agents: 6*
 *Java Spring focused: ⭐ Primary focus*
