@@ -32,6 +32,8 @@ services:
       - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
       - AWS_PROFILE=dev-readonly
       - AWS_REGION=ap-northeast-2
+      - AWS_ENDPOINT_URL=http://localstack:4566
+      - LOCALSTACK_HOST=localstack
       - TZ=Asia/Seoul
       - JAVA_HOME=/opt/java/openjdk
       - GRADLE_HOME=/opt/gradle
@@ -41,6 +43,8 @@ services:
       - NET_RAW
     depends_on:
       mysql:
+        condition: service_healthy
+      localstack:
         condition: service_healthy
     networks:
       - dev-network
@@ -65,7 +69,6 @@ services:
       - "3306:3306"
     volumes:
       - mysql-data:/var/lib/mysql
-      - ./scripts/init-db.sql:/docker-entrypoint-initdb.d/init.sql:ro
     networks:
       - dev-network
     healthcheck:
@@ -76,26 +79,33 @@ services:
       start_period: 60s
     command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --innodb-buffer-pool-size=128M
 
-  # LocalStack for AWS local testing (optional)
+  # LocalStack for AWS local testing
   localstack:
-    image: localstack/localstack:latest
+    image: localstack/localstack:3.0
     container_name: claude-localstack
     ports:
       - "4566:4566"  # LocalStack gateway
       - "4510-4559:4510-4559"  # External service ports
     environment:
-      - SERVICES=s3,dynamodb,lambda,sqs,sns,ses,secretsmanager,ssm
+      - SERVICES=s3,dynamodb,lambda,sqs,sns,ses,secretsmanager,ssm,cloudformation,iam,sts,logs
       - DEBUG=0
-      - DATA_DIR=/tmp/localstack/data
-      - LAMBDA_EXECUTOR=docker
+      - DATA_DIR=/var/lib/localstack
+      - LAMBDA_EXECUTOR=docker-reuse
       - DOCKER_HOST=unix:///var/run/docker.sock
+      - PERSISTENCE=1
+      - AWS_DEFAULT_REGION=ap-northeast-2
     volumes:
-      - localstack-data:/tmp/localstack
+      - localstack-data:/var/lib/localstack
       - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./scripts:/etc/localstack/init/ready.d
     networks:
       - dev-network
-    profiles:
-      - aws-local
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4566/_localstack/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
 
   # Redis Cache (optional)
   redis:

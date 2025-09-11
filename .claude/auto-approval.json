@@ -1,0 +1,556 @@
+{
+  "$schema": "https://raw.githubusercontent.com/anthropics/claude-code/main/schemas/auto-approval.json",
+  "version": "1.0.0",
+  "description": "Claude Code auto-approval configuration for safe commands",
+  "lastUpdated": "2025-09-11",
+  
+  "autoApproval": {
+    "enabled": true,
+    "logAutoApprovedCommands": true,
+    "requireExplicitDenial": false,
+    "maxConsecutiveCommands": 50,
+    "timeoutSeconds": 300
+  },
+
+  "categories": {
+    "read": {
+      "description": "Safe read-only operations",
+      "riskLevel": "minimal",
+      "autoApprove": true
+    },
+    "analyze": {
+      "description": "Code analysis and inspection",
+      "riskLevel": "minimal",
+      "autoApprove": true
+    },
+    "build": {
+      "description": "Build and compilation commands",
+      "riskLevel": "low",
+      "autoApprove": true
+    },
+    "test": {
+      "description": "Test execution commands",
+      "riskLevel": "low",
+      "autoApprove": true
+    },
+    "format": {
+      "description": "Code formatting and linting",
+      "riskLevel": "low",
+      "autoApprove": true
+    },
+    "git-read": {
+      "description": "Git read-only operations",
+      "riskLevel": "minimal",
+      "autoApprove": true
+    },
+    "git-write": {
+      "description": "Git write operations",
+      "riskLevel": "medium",
+      "autoApprove": false
+    },
+    "system": {
+      "description": "System modification commands",
+      "riskLevel": "high",
+      "autoApprove": false
+    }
+  },
+
+  "patterns": [
+    {
+      "pattern": "^ls\\s+",
+      "category": "read",
+      "description": "List directory contents",
+      "autoApprove": true
+    },
+    {
+      "pattern": "^cat\\s+",
+      "category": "read",
+      "description": "Display file contents",
+      "autoApprove": true
+    },
+    {
+      "pattern": "^head\\s+",
+      "category": "read",
+      "description": "Display first lines of file",
+      "autoApprove": true
+    },
+    {
+      "pattern": "^tail\\s+",
+      "category": "read",
+      "description": "Display last lines of file",
+      "autoApprove": true
+    },
+    {
+      "pattern": "^grep\\s+",
+      "category": "read",
+      "description": "Search file contents",
+      "autoApprove": true
+    },
+    {
+      "pattern": "^find\\s+",
+      "category": "read",
+      "description": "Find files and directories",
+      "autoApprove": true
+    },
+    {
+      "pattern": "^pwd$",
+      "category": "read",
+      "description": "Print working directory",
+      "autoApprove": true
+    },
+    {
+      "pattern": "^which\\s+",
+      "category": "read",
+      "description": "Locate command",
+      "autoApprove": true
+    },
+    {
+      "pattern": "^echo\\s+",
+      "category": "read",
+      "description": "Echo text",
+      "autoApprove": true
+    },
+    {
+      "pattern": "^env$",
+      "category": "read",
+      "description": "Display environment variables",
+      "autoApprove": true
+    },
+    {
+      "pattern": "^git\\s+status",
+      "category": "git-read",
+      "description": "Git status",
+      "autoApprove": true
+    },
+    {
+      "pattern": "^git\\s+log",
+      "category": "git-read",
+      "description": "Git log",
+      "autoApprove": true
+    },
+    {
+      "pattern": "^git\\s+diff",
+      "category": "git-read",
+      "description": "Git diff",
+      "autoApprove": true
+    },
+    {
+      "pattern": "^git\\s+branch(\\s+-[av])?",
+      "category": "git-read",
+      "description": "Git branch list",
+      "autoApprove": true
+    },
+    {
+      "pattern": "^git\\s+remote\\s+-v",
+      "category": "git-read",
+      "description": "Git remote list",
+      "autoApprove": true
+    },
+    {
+      "pattern": "^git\\s+show",
+      "category": "git-read",
+      "description": "Git show commit",
+      "autoApprove": true
+    },
+    {
+      "pattern": "^npm\\s+(list|ls)",
+      "category": "read",
+      "description": "NPM list packages",
+      "autoApprove": true
+    },
+    {
+      "pattern": "^npm\\s+run\\s+(lint|format|prettier)",
+      "category": "format",
+      "description": "NPM formatting commands",
+      "autoApprove": true
+    },
+    {
+      "pattern": "^npm\\s+(test|run\\s+test)",
+      "category": "test",
+      "description": "NPM test execution",
+      "autoApprove": true
+    },
+    {
+      "pattern": "^npm\\s+(build|run\\s+build)",
+      "category": "build",
+      "description": "NPM build",
+      "autoApprove": true
+    },
+    {
+      "pattern": "^npm\\s+(run\\s+)?(dev|start)",
+      "category": "build",
+      "description": "NPM development server",
+      "autoApprove": true
+    },
+    {
+      "pattern": "^yarn\\s+(list|why)",
+      "category": "read",
+      "description": "Yarn list packages",
+      "autoApprove": true
+    },
+    {
+      "pattern": "^yarn\\s+(lint|format|prettier)",
+      "category": "format",
+      "description": "Yarn formatting commands",
+      "autoApprove": true
+    },
+    {
+      "pattern": "^yarn\\s+test",
+      "category": "test",
+      "description": "Yarn test execution",
+      "autoApprove": true
+    },
+    {
+      "pattern": "^yarn\\s+build",
+      "category": "build",
+      "description": "Yarn build",
+      "autoApprove": true
+    },
+    {
+      "pattern": "^yarn\\s+(dev|start)",
+      "category": "build",
+      "description": "Yarn development server",
+      "autoApprove": true
+    },
+    {
+      "pattern": "^python\\s+.*\\.py$",
+      "category": "build",
+      "description": "Python script execution",
+      "autoApprove": true,
+      "conditions": ["not_contains:shutil.rmtree", "not_contains:os.remove"]
+    },
+    {
+      "pattern": "^pytest",
+      "category": "test",
+      "description": "Python pytest",
+      "autoApprove": true
+    },
+    {
+      "pattern": "^black\\s+",
+      "category": "format",
+      "description": "Python Black formatter",
+      "autoApprove": true
+    },
+    {
+      "pattern": "^ruff\\s+(check|format)",
+      "category": "format",
+      "description": "Python Ruff linter",
+      "autoApprove": true
+    },
+    {
+      "pattern": "^mypy\\s+",
+      "category": "analyze",
+      "description": "Python type checking",
+      "autoApprove": true
+    },
+    {
+      "pattern": "^gradle\\s+(build|test|check)",
+      "category": "build",
+      "description": "Gradle build tasks",
+      "autoApprove": true
+    },
+    {
+      "pattern": "^./gradlew\\s+(build|test|check|bootRun)",
+      "category": "build",
+      "description": "Gradle wrapper tasks",
+      "autoApprove": true
+    },
+    {
+      "pattern": "^mvn\\s+(compile|test|package)",
+      "category": "build",
+      "description": "Maven build tasks",
+      "autoApprove": true
+    },
+    {
+      "pattern": "^docker\\s+ps",
+      "category": "read",
+      "description": "Docker list containers",
+      "autoApprove": true
+    },
+    {
+      "pattern": "^docker\\s+images",
+      "category": "read",
+      "description": "Docker list images",
+      "autoApprove": true
+    },
+    {
+      "pattern": "^docker\\s+logs",
+      "category": "read",
+      "description": "Docker container logs",
+      "autoApprove": true
+    },
+    {
+      "pattern": "^docker-compose\\s+(ps|logs)",
+      "category": "read",
+      "description": "Docker Compose status",
+      "autoApprove": true
+    },
+    {
+      "pattern": "^terraform\\s+(plan|validate|fmt)",
+      "category": "analyze",
+      "description": "Terraform planning",
+      "autoApprove": true
+    },
+    {
+      "pattern": "^terraform\\s+show",
+      "category": "read",
+      "description": "Terraform show state",
+      "autoApprove": true
+    },
+    {
+      "pattern": "^aws\\s+.*\\s+(list-|describe-|get-)",
+      "category": "read",
+      "description": "AWS CLI read operations",
+      "autoApprove": true
+    },
+    {
+      "pattern": "^curl\\s+-[sS]",
+      "category": "read",
+      "description": "Silent curl requests",
+      "autoApprove": true
+    },
+    {
+      "pattern": "^jq\\s+",
+      "category": "read",
+      "description": "JSON processing",
+      "autoApprove": true
+    },
+    {
+      "pattern": "^sed\\s+-n",
+      "category": "read",
+      "description": "Sed print only",
+      "autoApprove": true
+    },
+    {
+      "pattern": "^awk\\s+",
+      "category": "read",
+      "description": "AWK text processing",
+      "autoApprove": true
+    },
+    {
+      "pattern": "^wc\\s+",
+      "category": "read",
+      "description": "Word count",
+      "autoApprove": true
+    },
+    {
+      "pattern": "^du\\s+",
+      "category": "read",
+      "description": "Disk usage",
+      "autoApprove": true
+    },
+    {
+      "pattern": "^df\\s+",
+      "category": "read",
+      "description": "Disk free space",
+      "autoApprove": true
+    },
+    {
+      "pattern": "^ps\\s+",
+      "category": "read",
+      "description": "Process status",
+      "autoApprove": true
+    },
+    {
+      "pattern": "^top\\s+-b\\s+-n\\s+1",
+      "category": "read",
+      "description": "Top batch mode single iteration",
+      "autoApprove": true
+    },
+    {
+      "pattern": "^history",
+      "category": "read",
+      "description": "Command history",
+      "autoApprove": true
+    },
+    {
+      "pattern": "^date",
+      "category": "read",
+      "description": "Display date",
+      "autoApprove": true
+    },
+    {
+      "pattern": "^whoami",
+      "category": "read",
+      "description": "Current user",
+      "autoApprove": true
+    },
+    {
+      "pattern": "^hostname",
+      "category": "read",
+      "description": "Display hostname",
+      "autoApprove": true
+    },
+    {
+      "pattern": "^uname",
+      "category": "read",
+      "description": "System information",
+      "autoApprove": true
+    }
+  ],
+
+  "explicitDeny": [
+    {
+      "pattern": "^rm\\s+-rf\\s+/",
+      "description": "Dangerous recursive delete from root",
+      "riskLevel": "critical"
+    },
+    {
+      "pattern": "^sudo\\s+rm\\s+-rf",
+      "description": "Sudo recursive delete",
+      "riskLevel": "critical"
+    },
+    {
+      "pattern": "^:(){ :|:& };:",
+      "description": "Fork bomb",
+      "riskLevel": "critical"
+    },
+    {
+      "pattern": "^dd\\s+if=/dev/(zero|random)\\s+of=/",
+      "description": "Disk destroyer",
+      "riskLevel": "critical"
+    },
+    {
+      "pattern": "^mkfs\\.",
+      "description": "Format filesystem",
+      "riskLevel": "critical"
+    },
+    {
+      "pattern": ">\\s*/dev/sda",
+      "description": "Overwrite disk",
+      "riskLevel": "critical"
+    },
+    {
+      "pattern": "^chmod\\s+-R\\s+777\\s+/",
+      "description": "Dangerous permission change",
+      "riskLevel": "high"
+    },
+    {
+      "pattern": "^curl.*\\|\\s*(sudo\\s+)?sh",
+      "description": "Curl pipe to shell",
+      "riskLevel": "high"
+    },
+    {
+      "pattern": "^wget.*\\|\\s*(sudo\\s+)?sh",
+      "description": "Wget pipe to shell",
+      "riskLevel": "high"
+    }
+  ],
+
+  "environmentVariables": {
+    "allowRead": true,
+    "allowModify": false,
+    "sensitive": [
+      ".*_KEY$",
+      ".*_SECRET$",
+      ".*_TOKEN$",
+      ".*_PASSWORD$",
+      ".*_CREDENTIAL$",
+      "AWS_.*",
+      "GITHUB_.*",
+      "OPENAI_.*"
+    ]
+  },
+
+  "fileOperations": {
+    "allowRead": true,
+    "allowWrite": true,
+    "allowDelete": false,
+    "restrictedPaths": [
+      "/etc",
+      "/sys",
+      "/proc",
+      "~/.ssh",
+      "~/.aws",
+      "~/.config",
+      ".env",
+      ".env.local",
+      ".env.production"
+    ],
+    "allowedExtensions": [
+      ".js", ".jsx", ".ts", ".tsx",
+      ".py", ".java", ".go", ".rs",
+      ".html", ".css", ".scss", ".sass",
+      ".json", ".yaml", ".yml", ".toml",
+      ".md", ".txt", ".log",
+      ".sh", ".bash", ".zsh",
+      ".sql", ".graphql",
+      ".tf", ".tfvars",
+      ".xml", ".gradle", ".pom"
+    ]
+  },
+
+  "networkOperations": {
+    "allowLocalhost": true,
+    "allowLAN": true,
+    "allowInternet": false,
+    "allowedHosts": [
+      "localhost",
+      "127.0.0.1",
+      "0.0.0.0",
+      "*.local",
+      "localstack",
+      "mysql",
+      "redis",
+      "postgres",
+      "mongodb"
+    ],
+    "allowedPorts": [
+      3000, 3001, 3002, 3003,
+      4000, 4200, 4566,
+      5000, 5001, 5173, 5432, 5555,
+      6379,
+      8000, 8080, 8081, 8082, 8083,
+      9000, 9090, 9200, 9300
+    ]
+  },
+
+  "customRules": {
+    "spring-boot": {
+      "pattern": "^(./)?gradlew\\s+bootRun",
+      "autoApprove": true,
+      "description": "Spring Boot run"
+    },
+    "npm-scripts": {
+      "pattern": "^npm\\s+run\\s+[a-zA-Z0-9:_-]+$",
+      "autoApprove": true,
+      "description": "NPM script execution"
+    },
+    "yarn-scripts": {
+      "pattern": "^yarn\\s+[a-zA-Z0-9:_-]+$",
+      "autoApprove": true,
+      "description": "Yarn script execution"
+    },
+    "make-targets": {
+      "pattern": "^make\\s+[a-zA-Z0-9_-]+$",
+      "autoApprove": true,
+      "description": "Make target execution"
+    },
+    "claude-agents": {
+      "pattern": "^@agent:",
+      "autoApprove": true,
+      "description": "Claude agent invocation"
+    },
+    "claude-commands": {
+      "pattern": "^/(analyze|build|implement|improve|test|document)",
+      "autoApprove": true,
+      "description": "Claude slash commands"
+    }
+  },
+
+  "notifications": {
+    "onAutoApprove": "silent",
+    "onManualRequired": "prompt",
+    "onDeny": "alert",
+    "summaryInterval": 100,
+    "showExecutionTime": true
+  },
+
+  "safety": {
+    "maxCommandLength": 1000,
+    "maxConsecutiveFailures": 5,
+    "cooldownAfterFailures": 30,
+    "requireConfirmationForDestructive": true,
+    "blockIfUnsafe": true
+  }
+}

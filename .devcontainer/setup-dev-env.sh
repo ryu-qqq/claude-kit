@@ -103,59 +103,12 @@ print_success "Spring Boot template created at /workspace/templates/spring-boot/
 # 3. Terraform setup
 print_info "🏗️ Setting up Terraform environment..."
 terraform version | head -n 1
+print_success "Terraform available for infrastructure projects"
 
-# Create Terraform template structure
-mkdir -p /workspace/templates/terraform/{modules,environments}
-cat > /workspace/templates/terraform/environments/dev/main.tf << 'EOF'
-terraform {
-  required_version = ">= 1.7.5"
-  
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 5.0"
-    }
-  }
-  
-  # Backend configuration for state management
-  backend "s3" {
-    bucket         = "terraform-state-bucket"
-    key            = "dev/terraform.tfstate"
-    region         = "ap-northeast-2"
-    dynamodb_table = "terraform-state-lock"
-    encrypt        = true
-  }
-}
+# 4. AWS CLI and LocalStack configuration
+print_info "☁️ Configuring AWS CLI and LocalStack..."
 
-provider "aws" {
-  region = var.aws_region
-  
-  default_tags {
-    tags = {
-      Environment = "dev"
-      ManagedBy   = "Terraform"
-      Project     = var.project_name
-    }
-  }
-}
-
-variable "aws_region" {
-  description = "AWS region"
-  type        = string
-  default     = "ap-northeast-2"
-}
-
-variable "project_name" {
-  description = "Project name"
-  type        = string
-  default     = "claude-dev"
-}
-EOF
-
-print_success "Terraform templates created at /workspace/templates/terraform/"
-
-# 4. AWS CLI configuration
-print_info "☁️ Configuring AWS CLI..."
+# Configure AWS CLI for real AWS (if credentials provided)
 if [ -n "$AWS_ACCESS_KEY_ID" ] && [ -n "$AWS_SECRET_ACCESS_KEY" ]; then
     aws configure set aws_access_key_id "$AWS_ACCESS_KEY_ID" --profile dev-readonly
     aws configure set aws_secret_access_key "$AWS_SECRET_ACCESS_KEY" --profile dev-readonly
@@ -163,7 +116,29 @@ if [ -n "$AWS_ACCESS_KEY_ID" ] && [ -n "$AWS_SECRET_ACCESS_KEY" ]; then
     aws configure set output json --profile dev-readonly
     print_success "AWS CLI configured with dev-readonly profile"
 else
-    print_warning "AWS credentials not set. Please configure AWS CLI manually."
+    print_warning "AWS credentials not set. Using LocalStack only."
+fi
+
+# Configure AWS CLI for LocalStack
+aws configure set aws_access_key_id test --profile localstack
+aws configure set aws_secret_access_key test --profile localstack
+aws configure set region ap-northeast-2 --profile localstack
+aws configure set output json --profile localstack
+
+print_success "AWS CLI configured for LocalStack"
+
+# Test LocalStack connection
+print_info "Testing LocalStack connection..."
+if curl -s http://localstack:4566/_localstack/health > /dev/null 2>&1; then
+    print_success "LocalStack is available at http://localstack:4566"
+    
+    # Run LocalStack initialization if not already done
+    if [ -f "/workspace/.devcontainer/scripts/init-localstack.sh" ]; then
+        print_info "Initializing LocalStack resources..."
+        /workspace/.devcontainer/scripts/init-localstack.sh
+    fi
+else
+    print_warning "LocalStack not available yet. It may still be starting up."
 fi
 
 # 5. MySQL connection test script
@@ -227,7 +202,7 @@ echo "To run: cd $APP_NAME && ./gradlew bootRun"
 EOF
 chmod +x /workspace/create-spring-app.sh
 
-# Terraform project quick start
+# Terraform project quick start - Create simple structure only
 cat > /workspace/create-terraform-project.sh << 'EOF'
 #!/bin/bash
 if [ -z "$1" ]; then
@@ -239,12 +214,9 @@ PROJECT_NAME=$1
 mkdir -p $PROJECT_NAME/{modules,environments/{dev,staging,prod}}
 cd $PROJECT_NAME
 
-echo "Creating Terraform project structure for: $PROJECT_NAME"
-cp -r /workspace/templates/terraform/* .
-terraform init
-
-echo "✅ Terraform project created at ./$PROJECT_NAME"
-echo "To plan: cd $PROJECT_NAME && terraform plan"
+echo "Creating basic Terraform project structure for: $PROJECT_NAME"
+echo "✅ Terraform project structure created at ./$PROJECT_NAME"
+echo "📝 Add your Terraform configuration files (.tf) to get started"
 EOF
 chmod +x /workspace/create-terraform-project.sh
 
@@ -274,6 +246,8 @@ echo "🚀 Quick Start Commands:"
 echo "  - Create Spring app: ./create-spring-app.sh <app-name>"
 echo "  - Create Terraform project: ./create-terraform-project.sh <project-name>"
 echo "  - Test MySQL: ./test-mysql.sh"
+echo "  - Initialize LocalStack: ./scripts/init-localstack.sh"
+echo "  - Test LocalStack: aws s3 ls --profile localstack --endpoint-url=http://localhost:4566"
 echo "  - Load Claude agent: @agent:spring-boot-architect"
 echo ""
 echo "📖 For more help, type: claude-help"

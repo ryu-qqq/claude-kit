@@ -1,298 +1,120 @@
-# 🤖 팀 Claude 설정 - 표준화된 AI 개발 환경
+# 🚀 Claude Kit
 
-Claude Code 팀 표준 환경을 5분 만에 구축하는 프로젝트
+팀 내에서 동일한 Claude Code 개발 환경을 구축하기 위한 설정 모음입니다.
 
-## 💡 핵심 개념
+## 📋 프로젝트 소개
 
-### 🎯 이것은 무엇인가?
+이 프로젝트는 **초기 단계**로, 팀원들이 동일한 Claude Code 설정을 공유하여 일관된 개발 경험을 갖도록 돕습니다.
 
-**팀 전체가 동일한 하이브리드 Claude Code 환경을 사용할 수 있게 해주는 설정 패키지**
+### 현재 제공하는 기능
 
-```
-Team Claude = 공식 SuperClaude Framework + aitmpl.com 에이전트(30K⭐) + 팀 워크플로우
-```
+- ✅ **표준화된 Claude Code 설정** - 팀 전체가 동일한 AI 어시스턴트 환경 사용
+- ✅ **자동 승인 설정** - 안전한 명령어들은 확인 없이 자동 실행
+- ✅ **DevContainer 테스트 환경** - Claude Code를 마음껏 실험할 수 있는 격리된 공간
 
-### 🔥 하이브리드 시스템의 강력함
-- **공식 SuperClaude**: 22개 `/sc:` 명령어 + 6개 Behavioral 모드
-- **aitmpl.com 에이전트**: 30K+ GitHub 스타의 검증된 전문 에이전트 33개
-- **완벽한 통합**: 충돌 없는 네임스페이스 분리로 최고의 조합
+## 🎯 빠른 시작
 
-- ✅ **원클릭 설정** - 스크립트 한 번으로 완료
-- ✅ **개인/팀 분리** - 개인 설정은 보존하면서 팀 표준 적용
-- ✅ **자동 백업** - 기존 설정 안전 보관
-- ✅ **지속적 업데이트** - 팀 표준 업데이트 쉬움
-
-## 🚀 빠른 시작
-
-### 1단계: 프로젝트 설치
+### 1. 저장소 클론
 
 ```bash
-# 프로젝트 클론
-git clone <repository-url>
-cd claude-global-config
+git clone https://github.com/ryu-qqq/claude-kit.git
+cd claude-kit
+```
 
-# 팀 Claude 환경 설치
+### 2. Claude Code 설정 적용
+
+```bash
 ./setup-team-claude.sh
 ```
 
-### 2단계: 즉시 사용 가능!
+### 3. Claude Code 재시작
+
+설정이 적용되도록 Claude Code를 완전히 종료했다가 다시 시작하세요.
+
+## 🤖 자동으로 설정되는 것들
+
+### Claude Code 기본 설정
+- **SuperClaude 프레임워크** - 향상된 명령어 시스템
+- **29개 전문 에이전트** - Spring Boot, AWS, DevOps 등 도메인별 전문가
+- **자동 승인 규칙** - 300+ 안전한 명령어 패턴
+- **텔레메트리** - Claude Code 사용 패턴 분석 (기본 활성화)
+
+### 자동 승인되는 명령어 예시
 
 ```bash
-# 🎯 공식 SuperClaude 명령어 (/sc: 접두사)
-/sc:build my-project --focus performance
-/sc:analyze --deep --persona architect
-/sc:implement user-authentication --type microservice
-/sc:improve --quality --automated
+# ✅ 자동 실행 (확인 없음)
+ls, cat, grep, git status, git diff
+npm test, npm run build, ./gradlew test
+docker ps, terraform plan
 
-# ⭐ aitmpl.com 전문 에이전트 (30K+ stars)
-@agent:spring-boot-architect
-@agent:aws-terraform-architect
-@agent:database-optimizer
-@agent:cost-optimized-environment-manager
-
-# 🔄 통합 워크플로우
-@workflow-orchestrator create deployment-pipeline
+# ❌ 수동 확인 필요
+rm -rf, git push, npm install
+terraform apply, docker rm
 ```
 
-### 3단계: Claude Code 재시작
+## 🐳 DevContainer - Claude Code 실험 공간
+
+Claude Code를 마음껏 테스트할 수 있는 격리된 개발 환경입니다.
+
+### 포함된 도구들
+- Java 21 + Spring Boot 3.3
+- MySQL 8.0 데이터베이스
+- AWS LocalStack (로컬 AWS 시뮬레이션)
+- Terraform 1.7.5
+
+### DevContainer 사용법
+
 ```bash
-# 설정 활성화를 위해 Claude Code 재시작 필요
-1. 현재 Claude Code 세션 종료
-2. 새로운 Claude Code 세션 시작
-3. /sc: 명령어와 @agent: 에이전트 테스트
+# VS Code에서 사용
+1. VS Code에서 프로젝트 열기
+2. Command Palette (Cmd/Ctrl + Shift + P)
+3. "Dev Containers: Reopen in Container" 선택
+
+# Docker Compose로 직접 실행
+cd .devcontainer
+docker-compose up -d
 ```
 
-## 🔧 제공되는 기능
+이 환경에서 Claude Code의 다양한 기능을 안전하게 테스트해보세요!
 
-### ⚡ SuperClaude 프레임워크 (자동 설치)
-- **22개 전문 명령어**: `/sc:analyze`, `/sc:implement`, `/sc:build`, `/sc:improve`
-- **15개 공식 에이전트**: 공식 SuperClaude 전문 에이전트
-- **6개 Behavioral 모드**: 작업 상황별 지능형 동작 패턴
-- **MCP 서버 통합**: 고급 확장 서버 지원
-- **원클릭 설치**: setup 스크립트가 자동으로 설치
+## 📁 프로젝트 구조
 
-### 🤖 33개 전문 에이전트
-
-#### ☕ Java & Spring (9개)
-- `spring-boot-architect` - Enterprise Spring Boot 애플리케이션
-- `aws-java-sdk-specialist` - AWS SDK v2 통합 전문가
-- `database-architect` - 데이터베이스 설계 및 최적화
-- `performance-profiler` - 애플리케이션 성능 분석
-- 기타 5개 Java/Spring 전문가
-
-#### 🏗️ Infrastructure & DevOps (8개)
-- `aws-terraform-architect` - AWS 인프라 with Terraform
-- `cloud-architect` - 멀티 클라우드 아키텍처
-- `devops-engineer` - CI/CD 파이프라인
-- `security-engineer` - 보안 및 컴플라이언스
-- 기타 4개 인프라 전문가
-
-#### 🧪 Quality & Testing (6개)
-- `test-engineer` - 테스트 전략 및 자동화
-- `load-testing-specialist` - 부하 테스트 및 성능 테스트
-- `code-reviewer` - 코드 리뷰 및 품질 평가
-- 기타 3개 품질 관리 전문가
-
-#### 📝 Documentation & Support (10개)
-- `documentation-expert` - 프로젝트 문서화
-- `technical-writer` - 기술 문서 작성
-- `ui-ux-designer` - UI/UX 디자인
-- 기타 7개 지원 전문가
-
-### 🔄 팀 워크플로우
-- **Workflow Orchestrator** - 복잡한 자동화 워크플로우
-- **팀 공통 명령어** - 표준화된 개발 프로세스
-- **프로젝트 템플릿** - 일관된 프로젝트 구조
-
-## 🏗️ 설정 구조
-
-### 팀 공통 영역 (모든 팀원 동일)
 ```
-~/.claude/
-├── CLAUDE.MD               # SuperClaude 진입점
-├── COMMANDS.MD             # 고급 명령어 시스템
-├── FLAGS.MD                # 스마트 플래그 시스템
-├── PRINCIPLES.MD           # 개발 원칙
-├── RULES.MD                # 실행 규칙
-├── MCP.MD                  # MCP 서버 통합
-├── agents/                 # 33개 전문 에이전트
-├── commands/               # 팀 공통 워크플로우
-├── AGENTS-REGISTRY.MD      # 에이전트 목록
-├── INSTRUCTIONS.MD         # 사용 지침
-├── PROJECT.MD              # 프로젝트 설정
-├── CONVENTIONS.MD          # 코딩 컨벤션
-└── team-config.json        # 팀 설정 추적
+claude-kit/
+├── .claude/                  # Claude Code 설정
+│   ├── agents/              # 29개 전문 에이전트
+│   ├── auto-approval.json   # 자동 승인 설정
+│   ├── telemetry.env        # 텔레메트리 설정
+│   ├── README.md            # 설정 파일 가이드
+│   └── *.MD                 # SuperClaude 프레임워크
+├── .devcontainer/           # 테스트용 Docker 환경
+└── setup-team-claude.sh     # 원클릭 설정 스크립트
 ```
 
-### 개인 작업 영역 (개별 관리)
-```
-~/.claude/personal/
-├── projects/               # 개인 프로젝트 히스토리
-├── todos/                  # 개인 할일 목록
-└── shell-snapshots/        # 개인 세션 데이터
-```
+### 📚 더 자세한 설정 정보
 
-## 🔧 트러블슈팅
+- **SuperClaude 프레임워크 이해하기**: [.claude/README.md](.claude/README.md)
+- **텔레메트리 설정 변경**: `.claude/telemetry.env` 파일 수정
+- **자동 승인 규칙 커스터마이징**: `.claude/auto-approval.json` 파일 수정
 
-### 설정 확인
+## 🔄 업데이트
+
+이 프로젝트는 계속 발전하고 있습니다. 최신 버전을 받으려면:
+
 ```bash
-# 팀 설정 상태 확인
-cat ~/.claude/team-config.json
-
-# 에이전트 개수 확인 (33개여야 함)
-ls ~/.claude/agents/ | wc -l
-
-# SuperClaude 프레임워크 확인
-ls ~/.claude/COMMANDS.MD ~/.claude/FLAGS.MD
-```
-
-### SuperClaude 수동 설치 (필요시)
-```bash
-# 방법 1: pipx 사용 (권장)
-pipx install SuperClaude
-SuperClaude install
-
-# 방법 2: pip 사용
-pip install --user SuperClaude
-SuperClaude install
-
-# 설치 확인
-SuperClaude --version
-```
-
-### 설정 업데이트
-```bash
-# 최신 팀 설정으로 업데이트
 git pull origin main
 ./setup-team-claude.sh
-# → 기존 설정은 자동 백업됨
 ```
 
-### 설정 복원
-```bash
-# 백업된 설정으로 복원
-ls ~/.claude.backup.*
-rm -rf ~/.claude
-mv ~/.claude.backup.YYYYMMDD_HHMMSS ~/.claude
-```
+## 🤝 기여
 
-## 🎯 팀 Claude 환경의 장점
+팀 컨벤션과 가이드라인은 실제 사용 경험을 바탕으로 추가될 예정입니다.
 
-### 1. **표준화된 개발 환경**
-- 모든 팀원이 동일한 33개 에이전트 사용
-- SuperClaude 프레임워크로 고급 명령어 활용
-- 일관된 워크플로우와 품질 기준
+## 📝 라이센스
 
-### 2. **빠른 온보딩**
-- 새로운 팀원: `./setup-team-claude.sh` 한 번으로 완료
-- 5분 만에 전문가급 Claude 환경 구축
-- 학습 곡선 최소화
-
-### 3. **개인/팀 설정 분리**
-- 팀 공통: agents, commands, 프레임워크
-- 개인 전용: projects, todos, shell-snapshots
-- 설정 충돌 없이 협업 가능
-
-### 4. **지속적인 개선**
-- 팀 에이전트 업데이트 시 모든 팀원에게 자동 적용
-- 새로운 워크플로우 공유 용이
-- 베스트 프랙티스 축적 및 전파
-
-### 5. **데이터 기반 최적화** 🔮 **Coming Soon**
-- **OTEL 수집기**: OpenTelemetry 기반 사용 패턴 수집
-- **사용 분석**: 어떤 에이전트가 가장 효과적인지 데이터 기반 분석
-- **성능 메트릭**: 개발 속도, 코드 품질, 에러율 추적
-- **맞춤형 추천**: 개인별 최적화된 에이전트 및 워크플로우 제안
-
-## 📚 사용 예시
-
-### Spring Boot 개발
-```bash
-@agent:spring-boot-architect
-"사용자 인증 시스템을 구현해줘"
-
-# 또는 SuperClaude 명령어 사용
-/sc:code user-auth --type microservice --framework spring-boot
-```
-
-### AWS 인프라 구축
-```bash
-@agent:aws-terraform-architect
-"Auto Scaling + RDS + ALB 구성해줘"
-
-# 또는 SuperClaude로
-/sc:build infrastructure --cloud aws --type scalable
-```
-
-### 복합 워크플로우
-```bash
-# SuperClaude 워크플로우
-/sc:workflow full-stack-deployment
-
-# 또는 에이전트 조합
-@workflow-orchestrator create deployment-pipeline
-```
-
-## 🔮 로드맵 - OTEL 분석 기능
-
-### 📊 OpenTelemetry 기반 사용 분석 시스템
-
-**목표**: Claude Code 사용 패턴을 수집하여 팀의 개발 효율성을 극대화
-
-#### 🎯 Phase 1: 데이터 수집 (Q1 2025)
-```yaml
-수집_데이터:
-  agent_usage:
-    - 사용된 에이전트별 빈도
-    - 작업 성공률 및 완료 시간
-    - 에러 패턴 및 재시도 횟수
-  
-  command_patterns:
-    - /sc: 명령어 사용 통계
-    - 플래그 조합 효과성
-    - 워크플로우 완료율
-  
-  productivity_metrics:
-    - 코드 생성량 (LOC/시간)
-    - 버그 수정 속도
-    - 테스트 커버리지 개선
-```
-
-#### 📈 Phase 2: 분석 대시보드 (Q2 2025)
-```yaml
-팀_인사이트:
-  최고_성과_에이전트:
-    - "spring-boot-architect: 95% 성공률"
-    - "aws-terraform-architect: 평균 30% 시간 단축"
-  
-  개인_최적화:
-    - "당신은 database-optimizer 사용 시 80% 더 효율적"
-    - "오전 10-12시에 @agent:code-reviewer 사용 권장"
-  
-  팀_벤치마킹:
-    - 팀 평균 대비 개발 속도
-    - 베스트 프랙티스 패턴 공유
-```
-
-#### 🤖 Phase 3: AI 추천 시스템 (Q3 2025)
-```yaml
-스마트_추천:
-  상황별_에이전트:
-    - "현재 작업에는 @agent:performance-profiler가 적합합니다"
-    - "이 에러 패턴에는 /sc:troubleshoot --deep을 사용해보세요"
-  
-  워크플로우_최적화:
-    - 자주 사용하는 패턴을 맞춤 명령어로 제안
-    - 팀 베스트 프랙티스 자동 적용
-```
-
-#### 🔐 개인정보 보호
-- **익명화된 메트릭만 수집**: 코드 내용은 수집하지 않음
-- **옵트아웃 가능**: 개인별 수집 거부 설정
-- **팀 내부 분석**: 외부 전송 없이 팀 내부에서만 활용
+내부 사용 목적
 
 ---
 
-**🚀 이제 팀 전체가 동일한 전문가급 Claude 환경을 사용할 수 있습니다!**
-
-**⚡ 새로운 팀원도 5분 만에 동일한 개발 환경 구축 완료!**
+**Repository**: https://github.com/ryu-qqq/claude-kit  
+**초기 버전**: 기본 설정 + DevContainer 테스트 환경
