@@ -8,3 +8,11 @@
 @PERSONAS.MD
 @ORCHESTRATOR.MD
 @MODES.MD
+
+# Custom Library Agents
+@agents/stackkit-terraform-specialist.md
+@agents/aws-kit-specialist.md
+
+# Java/Spring Convention
+@JAVA_HEXAGONAL.md
+@JAVA_VALIDATION.md

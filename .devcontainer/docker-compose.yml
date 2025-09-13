@@ -54,9 +54,9 @@ services:
       - "5001:5000"  # Additional services
     command: sleep infinity
 
-  # MySQL 8.4 Server (separate container)
+  # MySQL 8.4.5 Server (separate container)
   mysql:
-    image: mysql:8.0
+    image: mysql:8.4.5
     container_name: claude-mysql
     environment:
       - MYSQL_ROOT_PASSWORD=rootpass

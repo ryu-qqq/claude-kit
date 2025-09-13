@@ -71,9 +71,14 @@ backend:
   typical_operations: [implement, optimize, secure, scale]
 
 infrastructure:
-  keywords: [deploy, Docker, CI/CD, monitoring, scaling, configuration]
-  file_patterns: ["Dockerfile", "*.yml", "*.yaml", ".github/*", "terraform/*"]
-  typical_operations: [setup, configure, automate, monitor]
+  keywords: [deploy, Docker, CI/CD, monitoring, scaling, configuration, terraform, atlantis, stackkit]
+  file_patterns: ["Dockerfile", "*.yml", "*.yaml", ".github/*", "terraform/*", "*.tf", "*.tfvars", "atlantis.yaml"]
+  typical_operations: [setup, configure, automate, monitor, provision, deploy]
+
+aws_integration:
+  keywords: [aws, dynamodb, s3, sqs, lambda, com.ryuqq.aws, awskit, localstack]
+  file_patterns: ["*.java", "*.kt", "application*.yml", "application*.yaml", "build.gradle", "pom.xml"]
+  typical_operations: [integrate, configure, implement, test, deploy]
 ```
 
 ## 🚦 Routing Intelligence
@@ -105,6 +110,10 @@ wave-strategies:
 | "implement feature" | moderate | any | domain-specific persona, Context7, Sequential | 88% |
 | "optimize performance" | complex | backend | performance persona, --think-hard, Playwright | 90% |
 | "security audit" | complex | security | security persona, --ultrathink, Sequential | 95% |
+| "terraform" or "atlantis" | moderate | infrastructure | stackkit-terraform persona, Context7 | 92% |
+| "aws kit" or "spring aws" | moderate | backend | aws-kit persona, Context7, Sequential | 90% |
+| "stackkit" keyword | any | infrastructure | stackkit-terraform persona | 95% |
+| "com.ryuqq.aws" import | simple | backend | aws-kit persona | 93% |
 
 ### Decision Trees
 
@@ -138,6 +147,14 @@ wave-strategies:
 **UI/UX Tasks** → `--persona-frontend` + `--magic`
 - **Trigger Conditions**: Component creation, responsive design, accessibility
 - **Confidence Threshold**: 80% for automatic activation
+
+**StackKit Infrastructure** → `--persona-stackkit-terraform` + `--c7`
+- **Trigger Conditions**: terraform files, atlantis.yaml, gitops workflow, stackkit keywords
+- **Confidence Threshold**: 92% for automatic activation
+
+**AWS Kit Integration** → `--persona-aws-kit` + `--seq`
+- **Trigger Conditions**: com.ryuqq.aws imports, Spring AWS config, LocalStack setup
+- **Confidence Threshold**: 90% for automatic activation
 
 ## Quality Gates & Validation Framework
 
