@@ -9,9 +9,8 @@
 @ORCHESTRATOR.MD
 @MODES.MD
 
-# Custom Library Agents
-@agents/stackkit-terraform-specialist.md
-@agents/aws-kit-specialist.md
+# GitHub 코드베이스 실시간 통합
+@GITHUB_CODEBASE_INTEGRATION.md
 
 # Java/Spring Convention
 @JAVA_HEXAGONAL.md

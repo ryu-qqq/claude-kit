@@ -26,7 +26,6 @@ Java 프로젝트마다 다른 컨벤션, 매번 반복되는 설정, 일관성 
 - 🏗️ **Terraform + Atlantis GitOps 워크플로우**
 - ☁️ **3단계 배포 파이프라인** (develop → staging → production)
 - 💰 **비용 모니터링 및 안전 장치**
-- 📊 **Slack 통합 알림 시스템**
 
 ### 🛡️ Git 브랜치 보호 시스템
 - 🔒 **main/develop 브랜치 자동 보호**
@@ -40,9 +39,11 @@ Java 프로젝트마다 다른 컨벤션, 매번 반복되는 설정, 일관성 
 - 📊 **지능형 라우팅 및 도구 선택**
 - 🚀 **커스텀 라이브러리 전용 에이전트**
 
-### 🏗️ 커스텀 라이브러리 지원
-- 🔧 **StackKit Terraform 전문가** - [StackKit GitHub](https://github.com/ryu-qqq/stack-kit)
-- ☁️ **AWS Kit Spring Boot 전문가** - [AWS Kit GitHub](https://github.com/ryu-qqq/aws-kit)
+### 🔗 GitHub 코드베이스 실시간 통합
+- 🔧 **StackKit 실시간 분석** - [StackKit GitHub](https://github.com/ryu-qqq/stack-kit)
+- ☁️ **AWS Kit 실시간 분석** - [AWS Kit GitHub](https://github.com/ryu-qqq/aws-kit)
+- 🔄 **자동 최신화**: GitHub 저장소 실시간 분석으로 항상 최신 코드 기반 구현
+- 📊 **정확성 보장**: 실제 존재하는 API와 모듈만 사용하여 코드 생성
 
 ## 🚀 빠른 시작
 
@@ -158,10 +159,8 @@ claude-global-config/
 │   ├── PRINCIPLES.MD                 # 핵심 원칙
 │   ├── RULES.MD                      # 행동 규칙
 │   │
-│   ├── 🔧 커스텀 라이브러리 전문가
-│   ├── agents/
-│   │   ├── stackkit-terraform-specialist.md  # StackKit 전문가
-│   │   └── aws-kit-specialist.md             # AWS Kit 전문가
+│   ├── 🔗 GitHub 코드베이스 실시간 통합
+│   ├── GITHUB_CODEBASE_INTEGRATION.md  # 실시간 코드베이스 분석 시스템
 │   │
 │   └── commands/                     # 커스텀 명령어
 │       └── husky-java.md            # Java CI/CD 자동화
@@ -215,14 +214,15 @@ git checkout -b feature/USER-123-implement-auth
 # 5. GitHub에서 PR 생성 및 리뷰
 ```
 
-### 🏗️ 인프라 구축
+### 🏗️ 인프라 구축 (실시간 GitHub 분석)
 ```bash
-# 1. StackKit 기반 인프라 설계
-# "StackKit으로 개발 환경 인프라를 구축해줘"
+# 1. StackKit 실시간 분석 기반 인프라 설계
+# "StackKit으로 MySQL과 Redis를 포함한 개발 환경 인프라 구축해줘"
+# → Claude Code가 실제 GitHub 저장소 분석 후 정확한 모듈 사용
 
-# 2. Terraform 코드 작성 및 검증
-# 3. Atlantis를 통한 안전한 배포
-# 4. 환경별 단계적 롤아웃
+# 2. 실제 존재하는 Terraform 모듈로 코드 생성
+# 3. Atlantis GitOps 워크플로우 자동 설정
+# 4. 진짜 CLI 도구 명령어 제공: ./tools/add-addon.sh database/mysql-rds
 ```
 
 ### 🗃️ 데이터베이스 설계
@@ -233,6 +233,17 @@ git checkout -b feature/USER-123-implement-auth
 # 2. 애그리게이트 경계 설계
 # 3. 캐싱 전략 적용
 # 4. 성능 최적화
+```
+
+### ☁️ AWS 서비스 통합 (실시간 GitHub 분석)
+```bash
+# 1. AWS Kit 실시간 분석 기반 서비스 통합
+# "AWS Kit으로 DynamoDB와 S3를 사용하는 파일 업로드 서비스 만들어줘"
+# → Claude Code가 실제 AWS Kit GitHub 저장소 분석 후 정확한 API 사용
+
+# 2. 실제 존재하는 서비스 클래스와 메서드로 코드 생성
+# 3. Spring Boot 자동 설정 및 application.yml 구성
+# 4. LocalStack 기반 테스트 환경 설정 포함
 ```
 
 ## 🐳 DevContainer - Claude Code 실험 공간
