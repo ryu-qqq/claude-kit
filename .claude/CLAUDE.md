@@ -16,3 +16,6 @@
 # Java/Spring Convention
 @JAVA_HEXAGONAL.md
 @JAVA_VALIDATION.md
+
+# Git & Development Workflow
+@GIT_BRANCH_STRATEGY.md

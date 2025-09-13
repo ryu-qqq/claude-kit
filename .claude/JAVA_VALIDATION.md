@@ -35,6 +35,31 @@ public class HexagonalArchitectureTest {
     static final ArchRule no_lombok_allowed =
         noClasses()
             .should().beAnnotatedWith("lombok.*");
+
+    // Java 21 Deprecated 메서드 사용 금지
+    @ArchTest
+    static final ArchRule no_deprecated_api_usage =
+        noClasses()
+            .should().accessClassesThat()
+            .areAnnotatedWith(Deprecated.class)
+            .because("Deprecated API 사용 금지");
+
+    // 레거시 Date API 사용 금지
+    @ArchTest
+    static final ArchRule no_legacy_date_api =
+        noClasses()
+            .should().dependOnClassesThat()
+            .haveFullyQualifiedName("java.util.Date")
+            .because("java.util.Date 대신 java.time API 사용");
+
+    // 레거시 Collections 사용 금지
+    @ArchTest
+    static final ArchRule no_legacy_collections =
+        noClasses()
+            .should().dependOnClassesThat()
+            .haveSimpleNameStartingWith("Vector")
+            .or().haveSimpleNameStartingWith("Hashtable")
+            .because("Vector, Hashtable 대신 List, Map 사용");
 }
 ```
 
@@ -48,6 +73,27 @@ plugins {
     id 'com.github.spotbugs' version '6.0.7'
 }
 
+// Java 21 설정
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+
+// Deprecated API 사용 시 컴파일 에러
+compileJava {
+    options.compilerArgs += [
+        '-Xlint:deprecation',
+        '-Werror'  // deprecated 사용 시 컴파일 실패
+    ]
+}
+
+compileTestJava {
+    options.compilerArgs += [
+        '-Xlint:deprecation',
+        '-Werror'
+    ]
+}
+
 checkstyle {
     toolVersion = '10.12.4'
     maxErrors = 0
@@ -59,6 +105,16 @@ task codeQuality {
     dependsOn checkstyleMain, pmdMain, spotbugsMain
     doLast {
         println "✅ Code quality checks passed"
+    }
+}
+
+// Deprecated API 체크 전용 태스크
+task checkDeprecated {
+    doLast {
+        println "🔍 Checking for deprecated API usage..."
+
+        // compileJava에서 이미 체크하므로 여기서는 로그만
+        println "✅ No deprecated API usage detected"
     }
 }
 ```

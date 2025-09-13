@@ -22,8 +22,8 @@ Java 프로젝트마다 다른 컨벤션, 매번 반복되는 설정, 일관성 
 - 🔄 **Wave 오케스트레이션**
 
 ### 커스텀 라이브러리 지원
-- 🏗️ **StackKit Terraform 전문가**
-- ☁️ **AWS Kit Spring Boot 전문가**
+- 🏗️ **StackKit** https://github.com/ryu-qqq/stack-kit
+- ☁️ **AWSKit** https://github.com/ryu-qqq/aws-kit
 
 ## 🎯 빠른 시작
 
@@ -134,8 +134,3 @@ git pull origin main
 ## 📝 라이센스
 
 내부 사용 목적
-
----
-
-**Repository**: https://github.com/ryu-qqq/claude-global-config
-**현재 버전**: SuperClaude + Java 헥사고날 아키텍처 + 커스텀 라이브러리 지원

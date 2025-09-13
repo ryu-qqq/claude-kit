@@ -39,15 +39,16 @@ cp "$PROJECT_DIR/.claude/MODES.MD" "$CLAUDE_DIR/"
 # Copy team agents and commands
 cp -r "$PROJECT_DIR/.claude/agents" "$CLAUDE_DIR/"
 cp -r "$PROJECT_DIR/.claude/commands" "$CLAUDE_DIR/"
-cp "$PROJECT_DIR/.claude/AGENTS-REGISTRY.md" "$CLAUDE_DIR/"
+# AGENTS-REGISTRY.md removed - no longer needed
 
-# Copy project templates and configurations
-cp -r "$PROJECT_DIR/.claude/templates" "$CLAUDE_DIR/"
-cp -r "$PROJECT_DIR/.claude/hooks" "$CLAUDE_DIR/"
-cp -r "$PROJECT_DIR/.claude/scripts" "$CLAUDE_DIR/"
-cp "$PROJECT_DIR/.claude/INSTRUCTIONS.md" "$CLAUDE_DIR/"
-cp "$PROJECT_DIR/.claude/PROJECT.md" "$CLAUDE_DIR/"
-cp "$PROJECT_DIR/.claude/CONVENTIONS.md" "$CLAUDE_DIR/"
+# Copy Java/Spring convention files
+cp "$PROJECT_DIR/.claude/JAVA_HEXAGONAL.md" "$CLAUDE_DIR/" 2>/dev/null || true
+cp "$PROJECT_DIR/.claude/JAVA_VALIDATION.md" "$CLAUDE_DIR/" 2>/dev/null || true
+
+# Copy optional directories if they exist
+cp -r "$PROJECT_DIR/.claude/templates" "$CLAUDE_DIR/" 2>/dev/null || true
+cp -r "$PROJECT_DIR/.claude/hooks" "$CLAUDE_DIR/" 2>/dev/null || true
+cp -r "$PROJECT_DIR/.claude/scripts" "$CLAUDE_DIR/" 2>/dev/null || true
 
 # 4. Create personal workspace directories
 echo "👤 Creating personal workspace..."
